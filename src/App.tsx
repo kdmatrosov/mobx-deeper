@@ -1,26 +1,22 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, {useContext, useEffect} from 'react';
 import './App.css';
+import {observer} from "mobx-react";
+import {ExampleStoreContext} from "./store/example-store";
+import {Deep} from "./components/deep";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    const {currentExample, updateExample} = useContext(ExampleStoreContext);
+    useEffect(() => {
+        updateExample();
+    }, [updateExample]);
+
+    return (
+        <div className="App">
+            <div>{currentExample.id}</div>
+            <div>{currentExample.name}</div>
+            <Deep/>
+        </div>
+    );
 }
 
-export default App;
+export default observer(App);
